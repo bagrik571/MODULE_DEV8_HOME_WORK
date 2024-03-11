@@ -1,0 +1,4 @@
+create TABLE "worker" (ID SERIAL primary key, NAME VARCHAR CHECK (length(NAME)>2 and length(NAME)<1000) not null, BIRTHDAY DATE CHECK (extract (year from BIRTHDAY) > 1990), LEVEL VARCHAR CHECK  (LEVEL in ('Trainee', 'Junior', 'Middle', 'Senior')) not null, SALARY money check (SALARY > '$100' and SALARY < '$100000') );
+CREATE TABLE "client" (ID BIGINT NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1 maxvalue 99999),NAME VARCHAR CHECK (length(NAME) > 2 and length(NAME) < 1000) NOT NULL);
+create table "project" (ID SERIAL primary key, CLIENT_ID int, START_DATE date, FINISH_DATE date);
+create table "project_worker"(PROJECT_ID int, foreign key (PROJECT_ID) references "project"(ID), WORKER_ID int, foreign key (WORKER_ID) references "worker"(ID), primary key (PROJECT_ID,WORKER_ID));
